@@ -109,11 +109,6 @@ class Element:
         '''Max element number defined'''
         return max([e.num for e in Element.elements] + [0])
     
-    def plotter(self):
-        x = [ N.x for N in self.nodes ]
-        y = [ N.y for N in self.nodes ]
-        return { 'x':x, 'y':y, 'lw':6, 'num':self.num }
-    
     def __repr__(self):
         return 'E{} (Nodes: {})'.format(self.num,self.nodes)
     

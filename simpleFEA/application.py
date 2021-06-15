@@ -5,14 +5,6 @@ Project-level classes.
 import itertools
 from tabulate import tabulate
 from simpleFEA.loads import Force, Displacement
-from simpleFEA.plotting import (
-    init_plot,
-    plot_elements,
-    plot_nodes,
-    add_displacement_arrows,
-    add_force_arrows,
-    show_plot
-)
 
 
 class Model:
@@ -164,32 +156,6 @@ class Model:
         d = Displacement( node,x,y,z)
         self._loads.append(d)
         self._disp.append(d)
-
-    def plot(self):
-        '''Plot the full model with all applied BCs/loads'''
-        fig,ax = init_plot(self.extents)
-        ax = plot_elements(ax,self.elements)
-        ax = plot_nodes(ax,self.elements)
-        add_force_arrows(ax,self.extents,self._forces)
-        add_displacement_arrows(ax,self.extents,self._disp)
-        show_plot()
-        return fig,ax
-
-    def nplot(self):
-        '''Plot just nodes'''
-        fig,ax = init_plot(self.extents)
-        ax.set_title('Nodes')
-        ax = plot_nodes(ax,self.elements)
-        show_plot()
-        return fig,ax
-
-    def eplot(self):
-        '''Plot just elements'''
-        fig,ax = init_plot(self.extents)
-        ax.set_title('Elements')
-        ax = plot_elements(ax,self.elements)
-        show_plot()
-        return fig,ax
 
     def __repr__(self):
         return f'Model {self.name}'
