@@ -23,7 +23,6 @@ class Model:
         self.name = name if name else ''
         self._elements = set()
         self._nodes = set()
-        self.materials = set()
         self._loads = []
         self._forces = []
         self._disp = []
@@ -76,6 +75,10 @@ class Model:
     def global_matrix_size(self):
         '''Calculate the size of the global (stiffness) matrix.'''
         return sum([n.nDOF for n in self.nodes ])
+    
+    @property
+    def materials(self):
+        return set([e.material for e in self.elements])
         
     @property
     def summary(self):
@@ -107,7 +110,7 @@ class Model:
             output += f'-- Material {m.num} --'.center(80) + '\n'
             output += m.summary + '\n\n'
         
-        output += ' END '.center(80,'*') + '\n'
+        output += ' END MODEL SUMMARY '.center(80,'*') + '\n'
         
         return output
     
@@ -147,10 +150,6 @@ class Model:
         '''Remove elements from the model'''
         for e in elems:
             self._elements.remove(e)
-    
-    def add_material(self,mat):
-        '''Add a material definition to the model'''
-        self.materials.add(mat)
     
     def F(self,node,x=0,y=0,z=0):
         '''Define a force and apply it to the model'''
