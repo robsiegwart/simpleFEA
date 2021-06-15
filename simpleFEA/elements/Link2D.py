@@ -84,10 +84,10 @@ class Link2D(Element):
     def d(self):
         '''Element elongation, equal to n_j,x - n_i,x'''
         # Transform first into local coordinates
-        u1x, u1y, u2x, u2y = dot(self.T, array([
+        u1x, u1y, u2x, u2y = dot(self.T.T, array([
             self.n1.solution[1], self.n1.solution[2], self.n2.solution[1], self.n2.solution[2]
         ]))
-        return u2x - u2y
+        return u2x - u1x
 
     @property
     def Fe(self):
