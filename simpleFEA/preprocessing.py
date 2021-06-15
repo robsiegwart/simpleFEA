@@ -64,13 +64,21 @@ class Node:
 
     @property
     def ux(self):
-        '''The ux displacement solution quantity'''
+        '''The ux displacement solution quantity in the global coordinate system'''
         return self.solution[1]
 
     @property
     def uy(self):
-        '''The uy displacement solution quantity'''
+        '''The uy displacement solution quantity in the global coordinate system'''
         return self.solution[2]
+
+    @property
+    def uz(self):
+        '''The uz displacement solution quantity in the global coordinate system'''
+        try:
+            return self.solution[3]
+        except KeyError:
+            return 0
     
 
 class Element:
