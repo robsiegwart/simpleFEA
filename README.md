@@ -71,9 +71,10 @@ model.solve()
 Results are available on the nodes or elements:
 
 ```Python
-print(n3.ux)    # UX displacement
-print(n3.uy)    # UY displacement
-print(e1.Fe)    # Element axial force
-print(e1.Sa)    # Element axial stress
+print(n3.ux)                    # UX displacement
+print(n3.uy)                    # UY displacement
+print(e1.Fe)                    # Element axial force
+print(e1.Sa)                    # Element axial stress
+print(model.solution.prnsol)    # ANSYS print nodal solution
 ```
 
