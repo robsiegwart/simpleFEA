@@ -13,7 +13,6 @@ time_start = time.time()
 
 # PROBLEM DEFINITION
 # ==================
-model = Model('VM4')
 
 # Properties
 l = 15*12      # 15 ft to inches
@@ -36,7 +35,7 @@ n3 = Node(a,0)
 e1 = Link2D(n1,n2,mat,A)
 e2 = Link2D(n2,n3,mat,A)
 
-model.add_elems(e1,e2)
+model = Model('VM4', [e1,e2])
 
 # Loads and BC's
 model.F(n2, y=-F)

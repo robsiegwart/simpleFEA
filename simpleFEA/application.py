@@ -19,7 +19,7 @@ class Model:
 
     :param str name:    Name of model (optional)
     '''
-    def __init__(self, name=None):
+    def __init__(self, name=None, elems=[]):
         self.name = name if name else ''
         self._elements = set()
         self._nodes = set()
@@ -28,6 +28,8 @@ class Model:
         self._disp = []
         self.solver = None
         self.solution = None
+        if elems:
+            self.add_elems(*elems)
     
     def solve(self):
         if not self.solver:
