@@ -27,7 +27,6 @@ b = l*math.sin(math.radians(theta))
 
 # Material properties
 mat = LinearMaterial(1, E=E)
-model.add_material(mat)
 
 # Mesh
 n1 = Node(0,0)
@@ -44,8 +43,8 @@ model.F(n2, y=-F)
 model.D(n1, x=0, y=0)
 model.D(n3, x=0, y=0)
 
-# View the model at this stage
-# model.plot()
+# Model diagnostics
+print(model.summary)
 
 
 # SOLUTION AND POST-PROCESSING
@@ -67,4 +66,4 @@ print(e1.Sa)
 
 # -----------------------------------------------------------------------------
 time_end = time.time()
-print('Time elapsed: {} sec'.format(time_end-time_start))
+print('\nTime elapsed: {} sec'.format(time_end-time_start))
