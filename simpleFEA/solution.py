@@ -5,6 +5,7 @@ Solution-level classes.
 import numpy as np
 from scipy.sparse import lil_matrix
 from scipy.sparse.linalg import spsolve
+from tabulate import tabulate
 
 
 class Solution:
@@ -15,7 +16,9 @@ class Solution:
     @property
     def prnsol(self):
         '''Print the nodal displacement solution'''
-        return 'Foo'
+        table = [ [n.num, n.ux, n.uy, n.uz] for n in self.model.nodes ]
+        return '\nNodal Displacement Solution\n\n' + \
+            tabulate(table, headers=['Node','ux','uy','uz'], tablefmt='presto') + '\n'
     
     def __repr__(self):
         return f'{self.name} for {self.model}'
@@ -31,7 +34,7 @@ class LinearSolution(Solution):
     
     def solve(self):
         '''Solve the matrix equations to determine the displacement solution'''
-        # --------------------------- ASSEMBLY STAGE ---------------------------
+        # ------------------------------ ASSEMBLY ------------------------------
         # Assemble the global stiffness matrix
         K = lil_matrix( (self.model.global_matrix_size, self.model.global_matrix_size) )
         for e in self.model.elements:
@@ -56,7 +59,7 @@ class LinearSolution(Solution):
                 F[f.node.indices[DOF]] = f.value(DOF)
         self.F = F
 
-        # --------------------------- SOLUTION STAGE ---------------------------
+        # ------------------------------ SOLUTION ------------------------------
         # Reduce matrices at locations of zero displacement
         keep_ind = []
         for i,each in enumerate(U):
@@ -69,7 +72,7 @@ class LinearSolution(Solution):
         # Solve
         self.U_ = spsolve(K_,F_)
 
-        # --------------------------- RECOVERY STAGE ---------------------------
+        # ------------------------------ RECOVERY ------------------------------
         # Assemble the full displacement solution
         self.U_total = self.U.copy()
         self.U_total[keep_ind] = self.U_
