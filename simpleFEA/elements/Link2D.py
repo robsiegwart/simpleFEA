@@ -90,11 +90,11 @@ class Link2D(Element):
         return u2x - u1x
 
     @property
-    def Fe(self):
+    def F(self):
         '''Axial force in member'''
         return self.material.get('E')*self.A/self.L*self.d
 
     @property
     def Sa(self):
         '''Axial stress in element'''
-        return self.Fe/self.A
+        return self.F/self.A
