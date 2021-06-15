@@ -27,9 +27,6 @@ class Model:
         self._loads = []
         self._forces = []
         self._disp = []
-        self.extents = { 'x_max': 0, 'x_min':   0,
-                         'y_max': 0, 'y_min':   0,
-                         'width': 0, 'height:': 0 }
         self.solver = None
         self.solution = None
     
@@ -47,10 +44,12 @@ class Model:
     
     @property
     def displacements(self):
+        '''A list of displacement loads defined in the model'''
         return list(filter(lambda x: isinstance(x, Displacement), self.loads))
 
     @property
     def forces(self):
+        '''A list of force loads defined in the model'''
         return list(filter(lambda x: isinstance(x, Force), self.loads))
 
     @property
@@ -120,13 +119,22 @@ class Model:
                 n.indices.update({DOF:i})
                 i += 1
     
-    def update_extents(self, n):
-        self.extents['x_max'] = max(self.extents['x_max'], n.x)
-        self.extents['x_min'] = min(self.extents['x_min'], n.x)
-        self.extents['y_max'] = max(self.extents['y_min'], n.y)
-        self.extents['y_min'] = min(self.extents['y_min'], n.y)
-        self.extents['width'] = self.extents['x_max'] - self.extents['x_min']
-        self.extents['height'] = self.extents['y_max'] - self.extents['y_min']
+    @property
+    def extents(self):
+        '''
+        Calculate the model bounds in each axis.
+        
+        Returns a tuple:  (x_min, x_max, y_min, y_max, z_min, z_max)
+        '''
+        x_min, x_max, y_min, y_max, z_min, z_max = 0,0,0,0,0,0
+        for n in self.nodes:
+            x_min = min(x_min, n.x)
+            x_max = max(x_max, n.x)
+            y_min = min(y_min, n.y)
+            y_max = max(y_max, n.y)
+            z_min = min(z_min, n.z)
+            z_max = max(z_max, n.z)
+        return (x_min, x_max, y_min, y_max, z_min, z_max)
     
     def add_elems(self, *elems):
         '''Add elements to the model'''
@@ -134,7 +142,6 @@ class Model:
             self._elements.add(e)
             for n in e.nodes:
                 self._nodes.add(n)
-                self.update_extents(n)
     
     def remove_elems(self, *elems):
         '''Remove elements from the model'''
