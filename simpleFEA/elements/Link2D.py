@@ -72,7 +72,7 @@ class Link2D(Element):
     @cached_property
     def K(self):
         '''The global element stiffness matrix'''
-        Ke = self.material.get('E')*self.A/self.L*self.SF
+        Ke = self.material.E*self.A/self.L*self.SF
         """Local element stiffness matrix"""
         return dot(dot(self.T.T, Ke), self.T)
 
@@ -92,7 +92,7 @@ class Link2D(Element):
     @property
     def F(self):
         '''Axial force in member'''
-        return self.material.get('E')*self.A/self.L*self.d
+        return self.material.E*self.A/self.L*self.d
 
     @property
     def Sa(self):

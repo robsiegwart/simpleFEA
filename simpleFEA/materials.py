@@ -13,8 +13,8 @@ class Material:
         self.num = num if num else max([m.num for m in Material._materials] + [0])
         Material._materials.append(self)
     
-    def get(self, prop):
-        '''Lookup a property definition'''
+    def __getattr__(self, prop):
+        '''Retrieve a property definition'''
         return self.property_dict.get(prop)
 
 
@@ -32,7 +32,7 @@ class LinearMaterial(Material):
 
     :param kwargs kwargs:  Property-value pairs
 
-    >>> mat = Material(1, E=29e6, nu=0.3)
+    >>> mat = Material(E=29e6, nu=0.3)
     '''
     def __init__(self, num=None, **kwargs):
         super().__init__(num)
