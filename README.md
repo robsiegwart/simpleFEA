@@ -1,8 +1,7 @@
 simpleFEA
 =========
 
-A completely simple and trivial structural FEA program as a project for learning
-FEA programming.
+A simple structural FEA program as a project for learning FEA programming.
 
 ## Contents
 Currently features the following:
