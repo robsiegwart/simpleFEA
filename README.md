@@ -19,7 +19,7 @@ Currently features the following:
 
 *Elements*
 
-- Two-dimensional link/spar (`Link2D`)
+- Two-dimensional link/truss (`Link2D`)
 
 *Solution*
 
