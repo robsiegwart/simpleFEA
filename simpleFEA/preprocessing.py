@@ -35,7 +35,7 @@ class Node:
         self.forces = []
         self.disp = []
         self.DOF = set()
-        '''The DOFs for this node (none until attached to an element)'''
+        '''The DOFs for this node (none defined until attached to an element)'''
         self.indices = dict()
         '''The indices of this node's DOF in the global matrix'''
         self.elements = set()
