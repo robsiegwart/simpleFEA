@@ -2,7 +2,7 @@ from simpleFEA import *
 from simpleFEA.elements import Link2D
 
 
-mat = LinearMaterial(1, E=5e5)
+mat = LinearMaterial(E=5e5)
 
 n1 = Node(0, 0)
 n2 = Node(10, 0)

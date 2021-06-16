@@ -34,7 +34,7 @@ class LinearMaterial(Material):
 
     >>> mat = Material(1, E=29e6, nu=0.3)
     '''
-    def __init__(self, num, **kwargs):
+    def __init__(self, num=None, **kwargs):
         super().__init__(num)
         self.property_dict = kwargs
     

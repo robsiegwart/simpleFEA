@@ -41,7 +41,7 @@ from simpleFEA.elements import Link2D
 Create a material:
 
 ```Python
-mat = LinearMaterial(1, E=5e5)
+mat = LinearMaterial(E=5e5)
 ```
 
 Build the model mesh:
