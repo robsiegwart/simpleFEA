@@ -65,7 +65,7 @@ Add displacements, forces:
 
 ```Python
 model.D(n1, x=0, y=0)
-model.D(n2, x=0, y=0)
+model.D(n2, y=0)
 model.F(n3, x=100)
 ```
 
@@ -90,8 +90,8 @@ Output:
 ```
 0.03062741699796952
 -0.008
-241.4213562373095
-965.685424949238
+141.42135623730948
+565.6854249492379
 ```
 
 Or with summary properties:
