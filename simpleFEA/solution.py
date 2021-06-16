@@ -22,6 +22,23 @@ class Solution:
     
     def __repr__(self):
         return f'{self.name} for {self.model}'
+    
+    @property
+    def prrsol(self):
+        '''Print the nodal force reaction solution'''
+        table = []
+        for n in sorted(self.model.constrained_nodes, key=lambda n: n.num):
+            ndr = []
+            for d in n.disp:
+                for i in range(1,4):
+                    if i in d.DOF:
+                        idx = n.indices[i]
+                        ndr.append(self.F_total[idx])
+                    else:
+                        ndr.append(None)
+            table.append([ n.num ] + ndr)
+        return '\nNodal Force Reaction Solution\n\n' + \
+            tabulate(table, headers=['Node','Fx','Fy','Fz'], tablefmt='presto') + '\n'
 
 
 class LinearSolution(Solution):

@@ -123,7 +123,12 @@ class Model:
             for DOF in n.DOF:
                 n.indices.update({DOF:i})
                 i += 1
-    
+        
+    @property
+    def constrained_nodes(self):
+        '''A list of the nodes having displacements applied to them'''
+        return [ d.node for d in self.displacements ]
+        
     @property
     def extents(self):
         '''
