@@ -19,9 +19,6 @@ Mesh
 .. autoclass:: simpleFEA.preprocessing.Element
    :members:
 
-.. autoclass:: simpleFEA.preprocessing.Component
-   :members:
-
 
 Materials
 ---------
