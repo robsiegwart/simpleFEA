@@ -1,5 +1,5 @@
 '''
-A 2D link element having 2 nodes each with 3 translational DOF.
+A 2D link element having 2 nodes each with 2 translational DOF.
 '''
 
 from functools import cached_property
