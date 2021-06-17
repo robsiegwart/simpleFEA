@@ -16,13 +16,6 @@ class Link2D(Element):
     :param Material mat:    Material
     :param num A:           Cross sectional area
     '''
-    SF = array([
-        [ 1, 0,-1, 0],
-        [ 0, 0, 0, 0],
-        [-1, 0, 1, 0],
-        [ 0, 0, 0, 0]
-    ])
-    '''Shape function'''
     
     DOF = set([1,2])
     '''Nodal degree-of-freedoms (DOF) - ux (1) and uy (2)'''
@@ -68,13 +61,21 @@ class Link2D(Element):
                 [ 0, 0, c, s],
                 [ 0, 0,-s, c]
             ])
+    
+    @property
+    def Ke(self):
+        '''The stiffness matrix in the element coordinate system'''
+        return self.material.E*self.A/self.L*array([
+                [ 1, 0,-1, 0],
+                [ 0, 0, 0, 0],
+                [-1, 0, 1, 0],
+                [ 0, 0, 0, 0]
+            ])
 
     @cached_property
     def K(self):
         '''The global element stiffness matrix'''
-        Ke = self.material.E*self.A/self.L*self.SF
-        """Local element stiffness matrix"""
-        return dot(dot(self.T.T, Ke), self.T)
+        return dot(dot(self.T.T, self.Ke), self.T)
 
     def __repr__(self):
         return f'Element {self.num} (Link2D)'
