@@ -2,7 +2,6 @@
 Preprocessing classes and functions.
 '''
 
-import math
 from simpleFEA.loads import Force, Displacement
 
 
@@ -79,47 +78,3 @@ class Node:
             return self.solution[3]
         except KeyError:
             return 0
-    
-
-class Element:
-    '''
-    Base class for elements.
-    
-    :param int num:             element number, defaults to *max defined element number + 1*
-    :param Material material:   material id reference
-    '''
-    elements = []
-
-    def __init__(self, num=None, material=None):
-        self.num = num if num else self.max_e + 1
-        Element.elements.append(self)
-        self.material = material
-        self.solution = {}
-        """Store solution quantities here"""
-
-        # Bookeeping for nodes on new element creation
-        for n in self.nodes:
-            # Assign the DOF to the nodes
-            n.DOF = n.DOF|self.DOF
-            # Add the element as a parent
-            n.elements.add(self)
-    
-    @property
-    def max_e(self):
-        '''Max element number defined'''
-        return max([e.num for e in Element.elements] + [0])
-    
-    def __repr__(self):
-        return 'E{} (Nodes: {})'.format(self.num,self.nodes)
-    
-    def get_global_index(self, local_index: int) -> int:
-        '''
-        Return the global index based on the row/col indices of an entry in the
-        local element stiffness matrix.
-
-        :param int local_index:     The row or column index of the entry in the
-                                    local element stiffness matrix
-        '''
-        node = math.floor(local_index/self.nDOF)
-        DOF = local_index - (node)*self.nDOF + 1
-        return self.nodes[node].indices[DOF]
