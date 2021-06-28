@@ -12,7 +12,7 @@ class Element:
     Base class for all elements.
     
     :param int num:             element number, defaults to *max defined element number + 1*
-    :param Material material:   material id reference
+    :param Material material:   material definition
     '''
     elements = []
 
@@ -53,6 +53,12 @@ class Element:
 
 class TwoNodeElement(Element):
     '''Base class for link and beam elements having two nodes'''
+    def __init__(self, num, mat):
+        super().__init__(num, mat)
+        
+        # Check that nodes are not coincident
+        if self.n1.x == self.n2.x and self.n1.y == self.n2.y:
+            raise Exception(f'Nodes for {self} are coindicent.')
 
     # Properties
     @property
@@ -68,9 +74,7 @@ class TwoNodeElement(Element):
     @property
     def theta(self):
         '''The angle in radians formed by the element w.r.t the horizontal axis.'''
-        if self.n2.x == self.n1.x:
-            return pi/2
-        return arctan((self.n2.y - self.n1.y)/(self.n2.x - self.n1.x))
+        return math.atan2((self.n2.y - self.n1.y), (self.n2.x - self.n1.x))
 
     # Post processing
     @property
