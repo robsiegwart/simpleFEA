@@ -35,9 +35,6 @@ class Element:
         '''Max element number defined'''
         return max([e.num for e in Element.elements] + [0])
     
-    def __repr__(self):
-        return 'E{} (Nodes: {})'.format(self.num,self.nodes)
-    
     def get_global_index(self, local_index: int) -> int:
         '''
         Return the global index based on the row/col indices of an entry in the
@@ -49,10 +46,24 @@ class Element:
         node = math.floor(local_index/self.nDOF)
         DOF = local_index - (node)*self.nDOF + 1
         return self.nodes[node].indices[DOF]
+    
+    @property
+    def nDOF(self):
+        '''Number of DOF per node'''
+        return len(self.DOF)
+    
+    def __repr__(self):
+        return f'Element {self.num} ({self.ENAME})'
 
+    __str__ = __repr__
+    
 
 class TwoNodeElement(Element):
     '''Base class for link and beam elements having two nodes'''
+    
+    n_num = 2
+    '''Number of nodes forming the element'''
+
     def __init__(self, num, mat):
         super().__init__(num, mat)
         

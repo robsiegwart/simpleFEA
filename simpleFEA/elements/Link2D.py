@@ -16,21 +16,15 @@ class Link2D(TwoNodeElement):
     :param Material mat:    Material
     :param num A:           Cross sectional area
     '''
-    
+    ENAME = 'Link2D'
+
     DOF = set([1,2])
     '''Nodal degree-of-freedoms (DOF) - ux (1) and uy (2)'''
-
-    nDOF = len(DOF)
-    '''Number of DOF per node'''
-    
-    n_num = 2
-    '''Number of nodes forming the element'''
 
     def __init__(self, n1, n2, mat=None, A=None, num=None):
         self.n1 = n1
         self.n2 = n2
         self.A = A
-        self._nodes = (n1, n2)
         super().__init__(num, mat)
     
     @cached_property
@@ -59,6 +53,3 @@ class Link2D(TwoNodeElement):
     def K(self):
         '''The global element stiffness matrix'''
         return dot(dot(self.T.T, self.Ke), self.T)
-
-    def __repr__(self):
-        return f'Element {self.num} (Link2D)'
