@@ -6,7 +6,7 @@ from simpleFEA.loads import Force, Displacement
 
 
 def N_dist(n1,n2):
-    '''Calculate the distance between two nodes'''
+    '''Calculate the scalar distance between two nodes'''
     return ((n2.x - n1.x)**2 + (n2.y - n1.y)**2 + (n2.z - n1.z)**2)**0.5
 
 
